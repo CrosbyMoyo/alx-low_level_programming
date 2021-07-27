@@ -1,30 +1,27 @@
 #include "holberton.h"
-#include <stdio.h>
 #include <stdlib.h>
-
 /**
- * _calloc - Entry point
- *@nmemb: size of the array
- *@size: size of the type
- * Return: a pointer to an array
- */
+* _calloc - prints calloc;
+* @nmemb: input string.
+* @size: input string.
+* Return: Pointer.
+*/
 void *_calloc(unsigned int nmemb, unsigned int size)
 {
-	void *array = NULL;
-	unsigned int i;
-	unsigned int t;
-	char *f;
+	char *p;
+	unsigned int i, d;
 
-	if (size == 0 || nmemb == 0)
+	d = nmemb * size;
+	if (nmemb <= 0 || size <= 0)
 		return (NULL);
-	t = nmemb * size;
-	array = malloc(t);
-	f = (char *)array;
-	if (f != NULL)
+
+	p = malloc(d);
+	if (p == NULL)
+		return (NULL);
+
+	for (i = 0; i < (d); i++)
 	{
-		for (i = 0; i < t; i++)
-			f[i] = 0;
-		return (f);
+		p[i] = 0;
 	}
-	return (NULL);
+	return (p);
 }
