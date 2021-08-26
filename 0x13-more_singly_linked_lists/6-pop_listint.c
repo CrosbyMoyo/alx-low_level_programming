@@ -1,23 +1,24 @@
-#include <stdio.h>
 #include <stdlib.h>
 #include "lists.h"
 
 /**
- * pop_listint - delete the head node and update the linked list
- * @head: first element of the list
- * Return: no return
- */
+  * pop_listint - ...
+  * @head: ...
+  *
+  * Return: ...
+  */
 int pop_listint(listint_t **head)
 {
-	struct listint_s *temp = NULL;
-	int i;
+	listint_t *new_head;
+	int n = 0;
 
-	if (*head == NULL)
-		return (0);
-	temp = *head;
-	i = temp->n;
-	*head = temp->next;
-	free(temp);
+	if (*head != NULL)
+	{
+		new_head = (*head)->next;
+		n = (*head)->n;
+		free(*head);
+		*head = new_head;
+	}
 
-	return (i);
+	return (n);
 }

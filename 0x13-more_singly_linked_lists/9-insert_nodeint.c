@@ -1,53 +1,50 @@
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include "lists.h"
 
 /**
- * insert_nodeint_at_index - inserts a new node at a given position
- * @head: first element of the list
- * @idx: index of the node we want to insert
- * @n: value of the node
- * Return: the value of a n node.
- */
+  * insert_nodeint_at_index - ...
+  * @head: ...
+  * @idx: ...
+  * @n: ...
+  *
+  * Return: ...
+  */
 listint_t *insert_nodeint_at_index(listint_t **head, unsigned int idx, int n)
 {
-	unsigned int i;
-	struct listint_s *temp = NULL;
-	struct listint_s *new = NULL;
-	int count;
+	listint_t *new_node, *iter;
+	unsigned int count = 1;
 
-	count = 0;
-	i = 0;
-	temp = (struct listint_s *)malloc(sizeof(struct listint_s));
-	new = (struct listint_s *)malloc(sizeof(struct listint_s));
-	if (new == NULL || head == NULL || temp == NULL)
-		return (NULL);
-	if (idx == 0)
+	if (head)
 	{
-		temp->n = n;
-		temp->next = *head;
-		*head = temp;
-		return (temp);
-	}
-	if (*head == 0)
-		return (NULL);
-	temp = *head;
-	new->n = n;
-	while (temp != NULL)
-	{
-		if (temp == NULL)
+		new_node = malloc(sizeof(listint_t));
+		if (new_node == NULL)
 			return (NULL);
-		if (i == (idx - 1))
+
+		new_node->n = n;
+		if (idx > 0)
 		{
-			new->next = temp->next;
-			temp->next = new;
-			count = 1;
-			break;
+			iter = *head;
+			while (iter)
+			{
+				if (count == idx)
+				{
+					new_node->next = iter->next;
+					iter->next = new_node;
+					return (new_node);
+				}
+				iter = iter->next;
+				count++;
+			}
+			if (idx > count)
+				return (NULL);
 		}
-		i++;
-		temp = temp->next;
+		else
+		{
+			new_node->next = *head;
+			*head = new_node;
+		}
+		return (new_node);
 	}
-	if (count == 0)
-		return (NULL);
-	return (new);
+	return (NULL);
 }

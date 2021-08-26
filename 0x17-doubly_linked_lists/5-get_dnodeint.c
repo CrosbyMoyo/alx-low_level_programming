@@ -1,23 +1,29 @@
-#include <stdio.h>
 #include <stdlib.h>
 #include "lists.h"
 
 /**
- * get_dnodeint_at_index - free a dlistint_t list.
- * @head: pointer to the first element of the list
- * @index: number of node we want to know
- * Return: no return
- */
+  * get_dnodeint_at_index - Gets a node from a doubly linked list
+  * @head: The head of the doubly linked list
+  * @index: The index to find in the doubly linked list
+  *
+  * Return: The specific node of the doubly linked list
+  */
 dlistint_t *get_dnodeint_at_index(dlistint_t *head, unsigned int index)
 {
-	unsigned int i = 0;
+	dlistint_t *current = head;
+	unsigned int iter_times = 0;
 
-	while (head != NULL)
+	if (head)
 	{
-		if (i == index)
-			return (head);
-		i++;
-		head = head->next;
+		while (current != NULL)
+		{
+			if (iter_times == index)
+				return (current);
+
+			current = current->next;
+			++iter_times;
+		}
 	}
+
 	return (NULL);
 }

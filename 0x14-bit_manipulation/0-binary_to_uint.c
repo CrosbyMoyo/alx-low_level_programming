@@ -1,56 +1,47 @@
+#include <stdlib.h>
 #include <stdio.h>
 #include "holberton.h"
 
 /**
-* _pow - pow to 2
-* @num: number
-* @n: number of times
-* Return: result to pow to  n number
-*/
-unsigned int _pow(unsigned int num, unsigned int n)
+  * binary_to_uint - Converts a binary number to an unsigned int
+  * @b: The binary string to converts
+  *
+  * Return: The positive number converted from a binary
+  */
+unsigned int binary_to_uint(const char *b)
 {
-	unsigned int sum, i;
+	unsigned int len = 0, count = 0, sum = 0;
 
-	sum = 1;
-	for (i = 0; i < n; i++)
+	if (b == NULL)
+		return (0);
+
+	len = _strlen(b);
+	while (len--)
 	{
-		sum = sum * num;
+		if (b[len] != 48 && b[len] != 49)
+			return (0);
 
+		if (b[len] == 49)
+			sum += 1 << count;
+
+		count++;
 	}
+
 	return (sum);
 }
 
 /**
- * binary_to_uint - convert Binary to uint
- * @b: binary number
- * Return: the converted number or O
- */
-unsigned int binary_to_uint(const char *b)
+  * _strlen - Returns the length of a string
+  * @s: String to count
+  *
+  * Return: String length
+  */
+int _strlen(const char *s)
 {
+	int c = 0;
 
-	unsigned int decimal, i, k;
+	while (s[c])
+		c++;
 
-	decimal = 0;
-	i = 0;
-	decimal = 0;
-	if (b == NULL)
-		return (0);
-	for (k = 0; b[k] != '\0'; k++)
-	{
-		if (((b[k]) != '0') && ((b[k]) != '1') && ((b[k]) != '\0'))
-			return (0);
-	}
-	k = k - 1;
-	while (b[i] != '\0')
-	{
-		if ((b[k - i]) == '1')
-		{
-			if (i == 0)
-				decimal += 1;
-			else
-				decimal += _pow(2, i);
-		}
-		i++;
-	}
-	return (decimal);
+	return (c);
 }

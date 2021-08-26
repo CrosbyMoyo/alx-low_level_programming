@@ -1,24 +1,23 @@
-#include <stdio.h>
 #include <stdlib.h>
 #include "lists.h"
 
 /**
- * free_list - frees a list_t list
- * @head: first element of the list
- * Return: no return
- */
+  * free_list - Frees a linked list.
+  * @head: The pointer to the first node of linked list
+  *
+  * Return: Nothing
+  */
 void free_list(list_t *head)
 {
-	struct list_s *temp = NULL;
-	struct list_s *aux =  NULL;
+	list_t *temp;
 
-	temp = head;
-	while (temp != NULL)
+	while (head)
 	{
-		aux = temp->next;
+		temp = head;
+		head = head->next;
 		free(temp->str);
 		free(temp);
-		temp = aux;
 	}
-	head = NULL;
+
+	free(head);
 }

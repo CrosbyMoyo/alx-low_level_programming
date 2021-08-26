@@ -1,26 +1,25 @@
-#include <stdio.h>
+#include <stdlib.h>
 #include "holberton.h"
 
 /**
- * flip_bits - returns the number of bits I need to flip to get from one number
- * @n: decimal number 1
- * @m: decimal number 2
- * Return: the number of bits I need to change
- */
+  * flip_bits - ...
+  * @n: ...
+  * @m: ...
+  *
+  * Return: ...
+  */
 unsigned int flip_bits(unsigned long int n, unsigned long int m)
 {
-	int count, i;
+	unsigned long int mask = 0, count = 0;
 
-	count = 0;
-	for (i = 0; i < 64; i++)
+	mask = n ^ m;
+	while (mask)
 	{
-
-		if (((n >> i) & 1) != ((m >> i) & 1))
-		{
+		if (mask & 1)
 			count++;
 
-		}
-
+		mask >>= 1;
 	}
+
 	return (count);
 }
