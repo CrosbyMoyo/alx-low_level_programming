@@ -1,23 +1,21 @@
+#include <stdio.h>
 #include "holberton.h"
 
 /**
- * set_bit - index.
- * @n: number.
- * @index: index index.
- * Return: output recursion.
+ * set_bit - returns the value of a bit at a given index
+ * @n: decimal number
+ * @index: index
+ * Return: 1 if it worked or -1 if an error occurred
  */
-
 int set_bit(unsigned long int *n, unsigned int index)
 {
-	unsigned long int start = 1;
+	unsigned long int var, mask;
 
-	if ((sizeof(unsigned long int) * 8) - 1 < index)
-	{
+	var = 0;
+	mask = 1;
+	if (index > 63)
 		return (-1);
-	}
-
-	start <<= index;
-	*n = *n | start;
-
+	var = *n | (mask << index);
+	*n = var;
 	return (1);
 }

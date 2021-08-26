@@ -1,22 +1,21 @@
+#include <stdio.h>
 #include "holberton.h"
 
 /**
- * clear_bit - clear a bit to zero.
- * @n: number.
- * @index: move position change.
- * Return: 1 if all ok.
+ * clear_bit - sets the value of a bit to 0 at a given index
+ * @n: decimal number
+ * @index: index
+ * Return: 1 if it worked or -1 if an error occurred
  */
-
 int clear_bit(unsigned long int *n, unsigned int index)
 {
-	unsigned long int start = 1;
+	unsigned long int mask, var;
 
-	if ((sizeof(unsigned long int) * 8) - 1 < index)
-	{
+	var = 0;
+	mask = 1;
+	if (index > 63)
 		return (-1);
-	}
-	start <<= index;
-	*n &= ~start;
-
+	var = *n & ~(mask << index);
+	*n = var;
 	return (1);
 }
