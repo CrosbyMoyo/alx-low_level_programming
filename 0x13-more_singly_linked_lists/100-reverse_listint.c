@@ -1,29 +1,26 @@
-#include <stdlib.h>
 #include "lists.h"
-
 /**
-  * reverse_listint - ...
-  * @head: ...
-  *
-  * Return: ...
-  */
+ * reverse_listint - thsi reverse a list
+ * @head: the head of list
+ * Description: this function delete a node
+ * section header: the header of this function is lists.h)*
+ * Return: 1 in success -1 in failure
+ */
 listint_t *reverse_listint(listint_t **head)
 {
-	listint_t *prev = NULL, *next = NULL;
+	listint_t *tmp, *actual;
 
-	if (head)
+	if (*head == NULL)
+		return (NULL);
+
+	actual = *head;
+
+	while (actual->next)
 	{
-		while (*head)
-		{
-			next = *head;
-			*head = (*head)->next;
-			next->next = prev;
-			prev = next;
-		}
-
-		*head = prev;
-		return (*head);
+		tmp = actual->next;
+		actual->next = tmp->next;
+		tmp->next = *head;
+		*head = tmp;
 	}
-
-	return (NULL);
+	return (*head);
 }
