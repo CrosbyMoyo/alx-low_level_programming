@@ -1,16 +1,13 @@
-#include "holberton.h"
-
+#include "main.h"
 /**
- * get_bit - gets bit on index `index`
- * @n: decimal number
- * @index: index of the bit
- * Return: the bit found
+ * get_bit - gets the bit in index
+ * @n: the number
+ * @index: index number
+ * Return: 1 or 0
  */
-
 int get_bit(unsigned long int n, unsigned int index)
 {
-	if (index >= sizeof(n) * BYTE_LENGHT)
+	if (index > 63)
 		return (-1);
-
-	return ((n >> index) & 1);
+	return (n >> index & 1);
 }
