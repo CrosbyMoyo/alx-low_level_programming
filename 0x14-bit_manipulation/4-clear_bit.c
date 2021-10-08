@@ -1,24 +1,38 @@
-/*
- * File: 4-clear_bit.c
- * Auth: Brennan D Baraban
- */
-
 #include "holberton.h"
+#define  BIT_SIZE 8
+/**
+ * powX - powers a number b to the p's power
+ * @b: base
+ * @p: power
+ * Return: return b to the power of a
+ */
+unsigned long int powX(int b, int p)
+{
+	unsigned long int ans = 1;
+
+	while (p)
+	{
+		ans *= b;
+		p--;
+	}
+	return (ans);
+}
 
 /**
- * clear_bit - Sets the value of a bit at a given index to 0.
- * @n: A pointer to the bit.
- * @index: The index to set the value at - indices start at 0.
- *
- * Return: If an error occurs - -1.
- *         Otherwise - 1.
+ * clear_bit - sets bit to zero at index index
+ * @n: input integer
+ * @index: returns the value of a bit at a given index
+ * Return: 1 for ssucess -1 for failure
  */
 int clear_bit(unsigned long int *n, unsigned int index)
 {
-	if (index >= (sizeof(unsigned long int) * 8))
+	unsigned long int test;
+
+	if (index > sizeof(n) * BIT_SIZE - 1)
 		return (-1);
 
-	*n &= ~(1 << index);
-
+	test = powX(2, index);
+	*n = (*n & test) ? *n ^ test : *n;
 	return (1);
+
 }
