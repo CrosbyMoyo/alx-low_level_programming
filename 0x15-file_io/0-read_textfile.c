@@ -1,31 +1,52 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <fcntl.h>
 #include "holberton.h"
 
 /**
-  * read_textfile - ...
-  * @filename: The source file
-  * @letters: Number of letters to reads and prints
-  *
-  * Return: ...
-  */
+ * read_textfile - check the code for Holberton School students.
+ * @filename: name of my file
+ * @letters: number of the letters that i used
+ * Return: Always 0.
+ */
+
 ssize_t read_textfile(const char *filename, size_t letters)
 {
-	int fd, readed;
-	char *buff = malloc(sizeof(char *) * letters);
+	int ID = 0;
+	ssize_t WR = 0;
+	ssize_t len = 0;
+	char *buff = NULL;
 
-	if (!buff)
-		return (0);
+	if (filename != NULL)
+	{
+		buff = malloc(letters);
+		if (buff == NULL)
+		{
+			return (0);
+		}
 
-	if (!filename)
-		return (0);
-
-	fd = open(filename, O_RDONLY, 0600);
-	if (fd == -1)
-		return (0);
-
-	readed = read(fd, buff, letters);
-	write(STDOUT_FILENO, buff, readed);
-
-	free(buff);
-	close(fd);
-	return (readed);
+		ID = open(filename, O_RDONLY, 0600);
+		if (ID == -1)
+		{
+			free(buff);
+			return (0);
+		}
+		len = read(ID, buff, letters);
+		if (len == -1)
+		{
+			free(buff);
+			return (0);
+		}
+		WR = write(STDOUT_FILENO, buff, len);
+		if (WR == -1 || WR < len)
+		{
+			free(buff);
+			return (0);
+		}
+		close(ID);
+		free(buff);
+		return (WR);
+	}
+	return (0);
 }

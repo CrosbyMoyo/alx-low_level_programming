@@ -1,46 +1,39 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <fcntl.h>
 #include "holberton.h"
 
 /**
-  * append_text_to_file - ...
-  * @filename: ...
-  * @text_content: ...
-  *
-  * Return: ...
-  */
+ * append_text_to_file - check the code for Holberton School students.
+ * @filename: name of my file
+ * @text_content: number of the letters that i used
+ * Return: Always 0.
+ */
+
 int append_text_to_file(const char *filename, char *text_content)
 {
-	int fd;
+	int ID = 0, wr = 0, count = 0;
 
-	if (!filename)
-		return (-1);
-
-	fd = open(filename, O_WRONLY | O_APPEND);
-	if (fd == -1)
-		return (-1);
-
-	if (text_content)
+	if (filename == NULL)
 	{
-		if (write(fd, text_content, _strlen(text_content)) == -1)
-			return (-1);
+		return (-1);
 	}
-
-	close(fd);
+	if (text_content != NULL)
+	{
+		for (count = 0; text_content[count] != '\0'; count++)
+		{}
+	}
+	ID = open(filename, O_APPEND | O_WRONLY, 0600);
+	if (ID == -1)
+	{
+		return (-1);
+	}
+	wr = write(ID, text_content, count);
+	if (wr == -1)
+	{
+		return (-1);
+	}
+	close(ID);
 	return (1);
-}
-
-/**
-  * _strlen - Returns the length of a string
-  * @s: String to count
-  *
-  * Return: String length
-  */
-int _strlen(char *s)
-{
-	int c = 0;
-
-	while (s[c])
-		c++;
-
-	return (c);
 }
