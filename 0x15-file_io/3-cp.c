@@ -1,60 +1,52 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <fcntl.h>
 #include "holberton.h"
 
-#ifndef BUFF_SIZE
-#define BUFF_SIZE 1024
-#endif
-
 /**
- * main - check the code for Holberton School students.
- * @argc: name of my file
- * @argv: number of the letters that i used
- * Return: Always 0.
+ * main - copies the content of a file to another file
+ * @argc: number of arguments passed to the program
+ * @argv: array of arguments
+ *
+ * Return: Always 0 (Success)
  */
-
 int main(int argc, char *argv[])
 {
-	int file_origin, file_dest;
-	ssize_t numb;
-	char buff[BUFF_SIZE];
+	int fd_r, fd_w, x, m, n;
+	char buf[BUFSIZ];
 
 	if (argc != 3)
 	{
 		dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n");
 		exit(97);
 	}
-	file_origin = open(argv[1], O_RDONLY);
-	if (file_origin == -1)
+	fd_r = open(argv[1], O_RDONLY);
+	if (fd_r < 0)
 	{
 		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
 		exit(98);
 	}
-	file_dest = open(argv[2], O_CREAT | O_WRONLY, 0664);
-	if (file_dest == -1)
+	fd_w = open(argv[2], O_CREAT | O_WRONLY | O_TRUNC, 0664);
+	while ((x = read(fd_r, buf, BUFSIZ)) > 0)
 	{
-		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]);
-		exit(99);
-	}
-	while ((numb = read(file_origin, buff, BUFF_SIZE)) > 0)
-	{
-		if (write(file_dest, buff, numb) != numb)
+		if (fd_w < 0 || write(fd_w, buf, x) != x)
 		{
 			dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]);
+			close(fd_r);
 			exit(99);
 		}
 	}
-	if (numb == -1)
+	if (x < 0)
 	{
 		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
 		exit(98);
 	}
-	if ((close(file_origin) == -1) || (close(file_dest) == -1))
+	m = close(fd_r);
+	n = close(fd_w);
+	if (m < 0 || n < 0)
 	{
-		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", file_origin);
+		if (m < 0)
+			dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd_r);
+		if (n < 0)
+			dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd_w);
 		exit(100);
 	}
-	exit(EXIT_SUCCESS);
+	return (0);
 }
